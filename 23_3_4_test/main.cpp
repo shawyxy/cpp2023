@@ -79,33 +79,101 @@ using namespace std;
 //
 //    return 0;
 //}
-void func1()
+//void func1()
+//{
+//    throw string("出现异常");
+//}
+//void func2()
+//{
+//    int* arr = new int[10];
+//    try
+//    {
+//        func1();
+//    }
+//    catch (...)
+//    {
+//        delete[] arr;
+//        throw; // 重新抛出异常
+//    }
+//
+//    delete[] arr;
+//}
+//int main()
+//{
+//    try
+//    {
+//        func2();
+//    }
+//    catch (const string& s)
+//    {
+//        cout << s << endl;
+//    }
+//    catch (...)
+//    {
+//        cout << "未知异常" << endl;
+//    }
+//
+//    return 0;
+//}
+//class Foo
+//        {
+//public:
+//    Foo() : m_data(new int(0)) // 构造函数
+//    {}
+//    ~Foo() noexcept // 析构函数不抛出异常
+//    {
+//        delete m_data;
+//    }
+//    Foo(Foo&& other) noexcept : m_data(nullptr) // 移动构造函数不抛出异常
+//    {
+//        swap(m_data, other.m_data);
+//    }
+//private:
+//    int* m_data; // 指针成员变量
+//};
+//class Bar
+//{
+//public:
+//    Bar() : m_vec() // 构造函数
+//    {}
+//    void add(int x) // 添加元素到容器中
+//    {
+//        m_vec.push_back(x);
+//    }
+//private:
+//    std::vector<int> m_vec; // 容器成员变量
+//};
+//class Baz
+//{
+//public:
+//    Baz(int a, int b) // 构造函数
+//        : m_a(a), m_b(b)
+//        {}
+//    void swap() // 交换两个成员变量的值
+//    {
+//        std::swap(m_a, m_b);
+//    }
+//private:
+//    int m_a; // 整数成员变量
+//    int m_b; // 整数成员变量
+//};
+class Exception
 {
-    throw string("出现异常");
-}
-void func2()
-{
-    int* arr = new int[10];
-    func1();
-
-    // 一系列操作
-
-    delete[] arr;
-}
-int main()
-{
-    try
+public:
+    Exception(int errid, const char* errmsg)
+            :_errid(errid)
+            , _errmsg(errmsg)
+    {}
+    int GetErrid() const
     {
-        func2();
+        return _errid;
     }
-    catch (const string& s)
+    virtual string what() const
     {
-        cout << s << endl;
+        return _errmsg;
     }
-    catch (...)
-    {
-        cout << "未知异常" << endl;
-    }
-
-    return 0;
-}
+protected:
+    int _errid;     // 错误编号
+    string _errmsg; // 错误信息
+    //...
+};
